@@ -26,7 +26,7 @@ yarn-debug.log*
 yarn-error.log*
 
 # local env files
-.env*.local
+.env.local
 .env
 
 # vercel
@@ -39,3 +39,6 @@ next-env.d.ts
 # testing tools
 /ngrok
 /stripe
+
+# clerk configuration (can include secrets)
+/.clerk/
