@@ -1,8 +1,5 @@
-import { ClerkLoading, ClerkLoaded, UserButton } from "@clerk/nextjs";
-import { Loader } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-
 import { cn } from "@/lib/utils";
 
 import { SidebarItem } from "./sidebar-item";
@@ -24,35 +21,27 @@ export const Sidebar = ({ className }: SidebarProps) => {
           <Image src="/mascot.svg" alt="Mascot" height={40} width={40} />
 
           <h1 className="text-2xl font-extrabold tracking-wide text-green-600">
-            Lingo
+            STEM-Link
           </h1>
         </div>
       </Link>
 
       <div className="flex flex-1 flex-col gap-y-2">
-        <SidebarItem label="Learn" href="/learn" iconSrc="/learn.svg" />
+        <SidebarItem 
+          label="Learn" 
+          href="/learn" 
+          iconSrc="/learn.svg"
+        />
         <SidebarItem
-          label="Leaderboard"
-          href="/leaderboard"
+          label="Profile"
+          href="/profile"
           iconSrc="/leaderboard.svg"
         />
-        <SidebarItem label="Quests" href="/quests" iconSrc="/quests.svg" />
-        <SidebarItem label="Shop" href="/shop" iconSrc="/shop.svg" />
-      </div>
-
-      <div className="p-4">
-        <ClerkLoading>
-          <Loader className="h-5 w-5 animate-spin text-muted-foreground" />
-        </ClerkLoading>
-
-        <ClerkLoaded>
-          <UserButton
-            afterSignOutUrl="/"
-            appearance={{
-              elements: { userButtonPopoverCard: { pointerEvents: "initial" } },
-            }}
-          />
-        </ClerkLoaded>
+        <SidebarItem 
+          label="Messaging" 
+          href="/messaging" 
+          iconSrc="/quests.svg" 
+        />
       </div>
     </div>
   );

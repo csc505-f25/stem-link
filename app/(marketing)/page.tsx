@@ -9,30 +9,37 @@ import { createBrowserClient } from "@/lib/supabase/client";
 
 // marketing page component
 export default function MarketingPage() {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [isSignedIn, setIsSignedIn] = useState(false);
-
+  
   useEffect(() => {
-    const supabase = createBrowserClient();
+    const run = async () => {
+      try {
+        setLoading(true);
 
-    // Check once if the user is signed in
-    supabase.auth.getUser().then(({ data }) => {
-      setIsSignedIn(!!data.user);
-      //console.log("user data:", data);
-    });
+        const supabase = createBrowserClient();
+        const { data } = await supabase.auth.getUser();
 
-    setLoading(false);
+        setIsSignedIn(!!data.user);
+      } 
+      catch (err) {
+        setIsSignedIn(false);
+      } 
+      finally {
+        setLoading(false);
+      }
+    };
+
+    run();
   }, []);
 
   // render the marketing page
   return (
     <div className="mx-auto flex w-full max-w-[988px] flex-1 flex-col items-center justify-center gap-2 p-4 lg:flex-row bg-white">
-      {/* Hero image */}
       <div className="relative mb-8 h-[240px] w-[240px] lg:mb-0 lg:h-[424px] lg:w-[424px]">
         <Image src="/hero.svg" alt="Hero" fill />
       </div>
 
-      {/* Text + Buttons */}
       <div className="flex flex-col items-center gap-y-8">
         <h1 className="max-w-[480px] text-center text-xl font-bold text-neutral-600 lg:text-3xl">
           Learn, practice, and master STEM topics with STEM-Link.
@@ -50,12 +57,6 @@ export default function MarketingPage() {
               <Button size="lg" variant="secondary" className="w-full" asChild>
                 <Link href="/sign-up">Get Started</Link>
               </Button>
-
-              {/*
-              <Button size="lg" variant="primaryOutline" className="w-full" asChild>
-                <Link href="/sign-in">I already have an account</Link>
-              </Button>
-              */}
             </>
           )}
         </div>
