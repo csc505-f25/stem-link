@@ -13,24 +13,12 @@ export default function MarketingPage() {
   const [isSignedIn, setIsSignedIn] = useState(false);
   
   useEffect(() => {
-    const run = async () => {
-      try {
-        setLoading(true);
+    const supabase = createBrowserClient();
 
-        const supabase = createBrowserClient();
-        const { data } = await supabase.auth.getUser();
-
-        setIsSignedIn(!!data.user);
-      } 
-      catch (err) {
-        setIsSignedIn(false);
-      } 
-      finally {
-        setLoading(false);
-      }
-    };
-
-    run();
+    supabase.auth.getSession().then(({ data }) => {
+      setIsSignedIn(!!data.session);
+      setLoading(false);
+    });
   }, []);
 
   // render the marketing page

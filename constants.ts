@@ -1,30 +1,49 @@
-export const POINTS_TO_REFILL = 10;
+export const TOPICS_LIST: string[] = [
+  "Physics",
+  "Chemistry",
+  "Biology",
+  "Earth Science",
+  "Environmental Science",
+  "Astronomy",
+  "Computer Science",
+  "Data Science",
+  "Information Technology",
+  "Electronics & Robotics",
+  "Mechanical Engineering",
+  "Electrical Engineering",
+  "Civil Engineering",
+  "Chemical Engineering",
+  "Aerospace Engineering",
+  "Biomedical Engineering",
+  "Industrial & Systems Engineering",
+  "Algebra",
+  "Geometry",
+  "Calculus",
+  "Statistics & Probability",
+  "Discrete Mathematics",
+  "Linear Algebra"
+];
 
-export const MAX_HEARTS = 5;
+export const DIFFICULTY_LEVELS: string[] = [
+  "Easy",
+  "Medium",
+  "Hard"
+];
 
-export const QUESTS = [
-  {
-    title: "Earn 20 XP",
-    value: 20,
-  },
-  {
-    title: "Earn 50 XP",
-    value: 50,
-  },
-  {
-    title: "Earn 100 XP",
-    value: 100,
-  },
-  {
-    title: "Earn 250 XP",
-    value: 250,
-  },
-  {
-    title: "Earn 500 XP",
-    value: 500,
-  },
-  {
-    title: "Earn 1000 XP",
-    value: 1000,
-  },
+export const TITLES: string[] = [
+  "Beginner in ",
+  "Intermediate in ",
+  "Advanced in "
+];
+
+export const POINTS_PER_QUESTION: number[] = [
+  10,
+  30,
+  50
+];
+
+export const TITLE_THRESHOLDS: number[] = [
+  1000,
+  3000,
+  5000
 ];

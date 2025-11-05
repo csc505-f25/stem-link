@@ -1,6 +1,6 @@
 import { Loader } from "lucide-react";
 
-// loading component for the learn page
+// loading component for the question page
 const Loading = () => {
   return (
     <div className="flex h-full w-full items-center justify-center">
