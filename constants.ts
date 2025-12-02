@@ -42,6 +42,8 @@ export const POINTS_PER_QUESTION: number[] = [
   50
 ];
 
+export const AMOUNT_TO_LOSE: number = 30;
+
 export const TITLE_THRESHOLDS: number[] = [
   1000,
   3000,

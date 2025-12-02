@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { POINTS_PER_QUESTION, DIFFICULTY_LEVELS, TITLES, TITLE_THRESHOLDS } from "@/constants";
+import { POINTS_PER_QUESTION, DIFFICULTY_LEVELS, TITLES, TITLE_THRESHOLDS, AMOUNT_TO_LOSE } from "@/constants";
 import { createBrowserClient } from "@/lib/supabase/client";
 
 // define shape of question data from api
@@ -79,10 +79,13 @@ const QuestionPage = () => {
       basePoints = POINTS_PER_QUESTION[2];
     }
 
-    setPointsAmount(basePoints);
+    // calculate number of points
+    const numPoints = correct ? basePoints : AMOUNT_TO_LOSE
+
+    setPointsAmount(numPoints);
 
     // delta is positive if correct, negative if incorrect
-    const delta = correct ? basePoints : -basePoints;
+    const delta = correct ? basePoints : -AMOUNT_TO_LOSE;
 
     try {
       // get current auth user
@@ -114,14 +117,26 @@ const QuestionPage = () => {
       const appUserId: number = appUser.user_id;
       const existingTitles: string[] = appUser.titles ?? [];
 
+      // check if user has ever sent a message before
+      const { data: sentMessages, error: msgCheckError } = await supabase
+        .from("messaging")
+        .select("message_id")
+        .eq("sender_id", appUserId)
+        .limit(1);
+
+      // set a variable for whether the user has sent any messages or not
+      const hasSentMessage = !!sentMessages && sentMessages.length > 0;
+
       // insert into question_history
-      const { error: historyError } = await supabase.from("question_history").insert({
-        user_id: appUserId,
-        question_info: questionData, 
-        correct: correct,
-        used_messaging: null,         
-        // question_id and answered_at are auto-generated
-      });
+      const { error: historyError } = await supabase
+        .from("question_history")
+        .insert({
+          user_id: appUserId,
+          question_info: questionData,
+          correct: correct,
+          used_messaging: hasSentMessage,
+          // question_id and answered_at are auto-generated
+        });      
 
       // log any associted errors but keep on updating
       if (historyError) {
@@ -213,7 +228,7 @@ const QuestionPage = () => {
   // render question page
   return (
     <div className="flex-1 flex flex-col bg-white px-6 py-10 lg:px-16 lg:py-12 overflow-hidden">
-      <div className="flex flex-1 flex-col items-center justify-center">
+      <div className="flex flex-1 flex-col items-center justify-start mt-6">
         <div className="w-full max-w-[1040px] flex flex-col gap-8">
           <div className="w-full rounded-3xl bg-white border border-slate-200 px-8 py-8 shadow-sm">
             <p className="mb-3 text-sm font-semibold text-slate-500">

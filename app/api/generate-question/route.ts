@@ -38,10 +38,11 @@ export async function POST(req: Request) {
     // construct prompt
     const prompt = `
 Generate exactly ONE random ${difficulty.toLowerCase()} difficulty multiple-choice question
-about the subject "${topic.toLowerCase()}".
+about the subject "${topic.toLowerCase()}". For reference, the difficulty is on a scale of 3 and
+can be either easy, medium, or hard, so adjust accordingly.
 
 Requirements:
-- The question should be appropriate for a STEM learning app.
+- The question should be appropriate for a STEM learning app and must not be overtly long in length.
 - Provide exactly 4 distinct answer options.
 - Clearly decide which one option is correct.
 - Respond ONLY with a single valid JSON object, no markdown, no extra text, no backticks.
@@ -59,10 +60,11 @@ Use this exact JSON shape:
     "answer option 3",
     "answer option 4"
   ],
-  "Correct_Index": 0
+  "Correct_Index": value 0 through 3
 }
 
 "Correct_Index" is the zero-based index (0 through 3) of the correct answer in the "Answers" array.
+The placement of the correct answer in "Answers" must be random and correct index should match accordingly.
     `.trim();
 
     // generate content and store response

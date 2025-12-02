@@ -40,7 +40,7 @@ export const Sidebar = ({ className }: SidebarProps) => {
         <SidebarItem 
           label="Messaging" 
           href="/messaging" 
-          iconSrc="/quests.svg" 
+          iconSrc="/heart.svg" 
         />
       </div>
     </div>
